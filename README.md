@@ -1,18 +1,21 @@
 ## Run Locallcy
 
-Clone git
+## Clone git
 
 -   git clone https://github.com/MahendraJaya/laralux-reservation.git
-    change the directory
+
+## change the directory
+
 -   cd laralux-reservation
-    Install dependencies
+    ## Install dependencies
 -   composer install
 -   npm install
 -   npm run build
-    Set up environment
+    ## Set up environment
 -   cp .env.example .env
 -   php artisan key:generate
 -   php artisan migrate
-Start server
--   php artisan serve
 
+## Start server
+
+-   php artisan serve

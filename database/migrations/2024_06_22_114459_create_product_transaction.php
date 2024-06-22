@@ -19,7 +19,6 @@ return new class extends Migration
             $table->foreign("transaction_id")->references("id")->on("transactions");
             $table->string("quantity", 3)->default("1");
             $table->string("subtotal", 10);
-            $table->timestamps();
         });
     }
 

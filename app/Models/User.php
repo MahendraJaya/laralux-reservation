@@ -42,4 +42,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function hotel(){
+        return $this->hasMany(Hotel::class, "user_id");
+    }
+
+    public function membership(){
+        return $this->hasMany(Membership::class, "user_id");
+    }
 }

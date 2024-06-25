@@ -12,7 +12,12 @@ class HotelController extends Controller
      */
     public function index()
     {
-        //
+        //munculkan data dengan pagination
+        //lalu di view untuk mengeluarkan next dan prev pakai links() -> cari di laravel documentation
+        $hotels = Hotel::paginate(4);
+
+        // nanti view nya di sini
+        // return view("pagination", compact("hotels"));
     }
 
     /**
@@ -34,9 +39,12 @@ class HotelController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Hotel $hotel)
+    public function show(Hotel $hotels)
     {
-        //
+        // ambil data hotel spesific menggunakan with untuk memanggil relasi supaya lebih optimal querynya
+        $hotel = Hotel::where("id", $hotels->id)->with(["user", "typeHotel"])->first();
+
+        // disini taruh return view nya bisa pake -> dd untuk lihat nama variable
     }
 
     /**

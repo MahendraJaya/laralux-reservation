@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hotel;
+use App\Models\TypeProduct;
 use Illuminate\Http\Request;
+use Auth;
 
 class HotelController extends Controller
 {
@@ -33,7 +35,16 @@ class HotelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $hotel = new Hotel();
+        $hotel->name = $request->input('name');
+        $hotel->address = $request->input('address');
+        $hotel->telephone = $request->input('telephone');
+        $hotel->email = $request->input("email");
+        $hotel->city = $request->input("city");
+        $hotel->type_hotel_id = $request->input("type_hotel_id");
+        $hotel->user_id = Auth::user()->id;
+        $hotel->save();
+
     }
 
     /**
@@ -45,14 +56,19 @@ class HotelController extends Controller
         $hotel = Hotel::where("id", $hotels->id)->with(["user", "typeHotel"])->first();
 
         // disini taruh return view nya bisa pake -> dd untuk lihat nama variable
+
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Hotel $hotel)
+    public function edit(Hotel $hotels)
     {
-        //
+        //ambil data hotel dan tipe produk
+        $hotel = $hotels;
+        $typeProducts = TypeProduct::all();
+        
+        //return view di sini
     }
 
     /**
@@ -69,5 +85,16 @@ class HotelController extends Controller
     public function destroy(Hotel $hotel)
     {
         //
+    }
+
+    public function indexAdmin()
+    {
+        if (Auth::user()->role == "owner") {
+            $hotels = Hotel::where("user_id", "=", Auth::user()->id)->with(["user", "typeHotel"])->get();
+        } else if(Auth::user()->role == "staff"){
+            $hotels = Hotel::with(["user", "typeHotel"])->get();
+        }
+
+        return view("admin.hotel.index", compact("hotels"));
     }
 }

@@ -18,19 +18,19 @@ use App\Http\Controllers\TransactionController;
 |
 */
 
-// Route::get('/', function () {
-//     if(Auth::user()->role == "owner"){
-//         return "Ini masuk owner";
-//     }else if(Auth::user()->role == "staff"){
-//         return "ini masuk staff";
-//     }else if(Auth::user()->role == "pembeli"){
-//         return "ini masuk pembeli";
-//     }
-//     // return view('welcome');
-// })->middleware('auth');
+Route::get('/', function () {
+    if(Auth::user()->role == "owner"){
+        return "Ini masuk owner";
+    }else if(Auth::user()->role == "staff"){
+        return "ini masuk staff";
+    }else if(Auth::user()->role == "pembeli"){
+        return "ini masuk pembeli";
+    }
+    // return view('welcome');
+})->middleware('auth');
 
 //halaman index
-Route::get('/', [HotelController::class, "index"]);
+// Route::get('/', [HotelController::class, "index"]);
 
 Route::resource('hotels', HotelController::class);
 
@@ -52,6 +52,20 @@ Route::post('/transaction/remove/{product}', [TransactionController::class, 'rem
 Route::get('/products', [ProductController::class, 'index'])->name('product.index');
 
 
-Route::group(['middleware' => 'auth'], function () {
-   //ini tempat route yang tidak bisa di akses oleh user yang bukan owner atau staff
+
+/*
+ * Route group for admin section that requires authentication
+ * Only routes accessible to owners and staff are defined here
+ */
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function () {
+    // Check if the user is a buyer, if so, return a message
+    // $user = Auth::user();
+    // if($user && $user->role == "pembeli"){
+    //     return "Ini masuk owner atau staff";
+    // }
+
+    Route::get("hotel", [HotelController::class, "index"])->name("hotel.index");
+
+    Route::get("/", [HotelController::class, "indexAdmin"])->name("hotel.indexAdmin");
+    // Define routes accessible to owners and staff here
 });

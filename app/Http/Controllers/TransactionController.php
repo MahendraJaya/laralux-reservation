@@ -112,7 +112,7 @@ class TransactionController extends Controller
             
             $newTransaction->product()->attach($product->id, [
                 'quantity' => $details['quantity'],
-                'subtotal' => $details['price'] * $details['quantity']
+                'subtotal' => ($details['price'] * $details['quantity']) * 1.11
             ]);
         }
 

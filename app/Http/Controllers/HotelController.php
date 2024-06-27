@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Hotel;
 use App\Models\TypeProduct;
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class HotelController extends Controller
 {

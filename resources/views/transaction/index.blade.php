@@ -39,9 +39,13 @@
                                                 </td>
                                             </tr>
                                         @endforeach
+                                        @php
+                                            $tax = $total * 0.11; // Calculate 11% tax
+                                            $totalWithTax = $total + $tax; // Total with tax
+                                        @endphp
                                         <tr>
-                                            <td colspan="3" class="text-right"><strong>Total</strong></td>
-                                            <td><strong>{{ $total }}</strong></td>
+                                            <td colspan="3" class="text-right"><strong>Total (including tax)</strong></td>
+                                            <td><strong>{{ $totalWithTax }}</strong></td>
                                             <td></td>
                                         </tr>
                                     </tbody>

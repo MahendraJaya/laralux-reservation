@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\ProductController;
 use App\Models\Hotel;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +37,20 @@ Route::resource('hotels', HotelController::class);
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/hotel', [HotelController::class, 'index'])->name('hotel.index');
+
+Route::get('/hotel/{hotel}/products', [ProductController::class, 'index'])->name('hotel.products');
+Route::get('/hotel/{hotelId}/products', [HotelController::class, 'showHotelProducts'])->name('product.index');
+
+Route::post('/transaction/add/{product}', [TransactionController::class, 'add'])->name('transaction.add');
+Route::get('/transaction', [TransactionController::class, 'index'])->name('transaction.index');
+Route::post('/transaction/update', [TransactionController::class, 'update'])->name('transaction.update');
+Route::post('/transaction/checkout', [TransactionController::class, 'checkout'])->name('transaction.checkout');
+Route::post('/transaction/remove/{product}', [TransactionController::class, 'remove'])->name('transaction.remove');
+
+
+Route::get('/products', [ProductController::class, 'index'])->name('product.index');
+
 
 Route::group(['middleware' => 'auth'], function () {
    //ini tempat route yang tidak bisa di akses oleh user yang bukan owner atau staff

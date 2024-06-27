@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Hotel;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -10,9 +11,10 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Hotel $hotel)
     {
-        //
+        $products = Product::where('hotel_id', $hotel->id)->get();
+        return view('product.index', compact('products', 'hotel'));
     }
 
     /**

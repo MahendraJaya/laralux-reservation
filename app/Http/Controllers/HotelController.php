@@ -10,11 +10,13 @@ class HotelController extends Controller
     /**
      * Display a listing of the resource.
      */
+    
     public function index()
     {
         //munculkan data dengan pagination
         //lalu di view untuk mengeluarkan next dan prev pakai links() -> cari di laravel documentation
         $hotels = Hotel::paginate(4);
+        return view('hotel.index', compact('hotels'));
 
         // nanti view nya di sini
         // return view("pagination", compact("hotels"));

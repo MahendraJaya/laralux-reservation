@@ -64,7 +64,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     //     return "Ini masuk owner atau staff";
     // }
 
+    // route untuk hotel
     Route::get("hotel", [HotelController::class, "index"])->name("hotel.index");
+    Route::get("hotel/{hotels}", [HotelController::class, "showAdmin"])->name("hotel.showAdmin");
+
+    //route untuk product
+    Route::get("hotel/{hotel}/product", [ProductController::class, "indexAdmin"])->name("product.indexAdmin");
+    Route::get("hotel/{hotel}/product/create", [ProductController::class, "createAdmin"])->name("product.createAdmin");
+    Route::post("hotel/{hotel}/product", [ProductController::class, "storeAdmin"])->name("product.storeAdmin");
+
+
 
     Route::get("/", [HotelController::class, "indexAdmin"])->name("hotel.indexAdmin");
     // Define routes accessible to owners and staff here

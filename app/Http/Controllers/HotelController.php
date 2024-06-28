@@ -99,4 +99,9 @@ class HotelController extends Controller
 
         return view("admin.hotel.index", compact("hotels"));
     }
+
+    public function showAdmin(Hotel $hotels){
+        $hotel = Hotel::where("id", $hotels->id)->with(["user", "typeHotel"])->first();
+        return view("admin.hotel.show", compact("hotel"));
+    }
 }

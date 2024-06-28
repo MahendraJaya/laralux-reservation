@@ -18,6 +18,7 @@
         <td>{{ $hotel->name }}</td>
         <td>{{ $hotel->telephone }}</td>
         <td>{{ $hotel->user->name }}</td>
+        <td><a href="{{ route('admin.hotel.showAdmin', $hotel) }}" class="btn btn-primary">Detail</a></td>
       </tr>
       @endforeach
     </tbody>

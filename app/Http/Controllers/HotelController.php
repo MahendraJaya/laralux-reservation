@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hotel;
+use App\Models\TypeHotel;
 use App\Models\TypeProduct;
 use Illuminate\Http\Request;
 use Auth;
@@ -12,7 +13,7 @@ class HotelController extends Controller
     /**
      * Display a listing of the resource.
      */
-    
+
     public function index()
     {
         //munculkan data dengan pagination
@@ -69,7 +70,7 @@ class HotelController extends Controller
         //ambil data hotel dan tipe produk
         $hotel = $hotels;
         $typeProducts = TypeProduct::all();
-        
+
         //return view di sini
     }
 
@@ -93,15 +94,62 @@ class HotelController extends Controller
     {
         if (Auth::user()->role == "owner") {
             $hotels = Hotel::where("user_id", "=", Auth::user()->id)->with(["user", "typeHotel"])->get();
-        } else if(Auth::user()->role == "staff"){
+        } else if (Auth::user()->role == "staff") {
             $hotels = Hotel::with(["user", "typeHotel"])->get();
         }
 
         return view("admin.hotel.index", compact("hotels"));
     }
 
-    public function showAdmin(Hotel $hotels){
+    public function showAdmin(Hotel $hotels)
+    {
         $hotel = Hotel::where("id", $hotels->id)->with(["user", "typeHotel"])->first();
         return view("admin.hotel.show", compact("hotel"));
+    }
+
+    public function createAdmin()
+    {
+        $types = TypeHotel::all();
+        return view("admin.hotel.create", compact("types"));
+    }
+
+    public function storeAdmin(Request $request)
+    {
+        $hotel = new Hotel();
+        $hotel->name = $request->input('name');
+        $hotel->address = $request->input('address');
+        $hotel->telephone = $request->input('telephone');
+        $hotel->email = $request->input("email");
+        $hotel->image = "new image";
+        $hotel->city = $request->input("city");
+        $hotel->rating = $request->input("rating");
+        $hotel->type_hotel_id = $request->input("type_hotel_id");
+        $hotel->user_id = Auth::user()->id;
+        $hotel->save();
+
+        return redirect()->route("admin.hotel.indexAdmin");
+    }
+
+    public function editAdmin(Hotel $hotel)
+    {
+        $types = TypeHotel::all();
+        return view("admin.hotel.edit", compact("hotel", "types"));
+    }
+
+    public function updateAdmin(Request $request)
+    {
+        $updatedHotel = Hotel::find($request->input('hotel_id'));
+        // dd($updatedHotel);
+        $updatedHotel->name = $request->input('name');
+        $updatedHotel->address = $request->input('address');
+        $updatedHotel->telephone = $request->input('telephone');
+        // $updatedHotel->email = $request->input("email");
+        $updatedHotel->image = "new image";
+        $updatedHotel->city = $request->input("city");
+        $updatedHotel->rating = $request->input("rating");
+        $updatedHotel->type_hotel_id = $request->input("type_hotel_id");
+        $updatedHotel->user_id = Auth::user()->id;
+        $updatedHotel->save();
+        return redirect()->route("admin.hotel.indexAdmin");
     }
 }

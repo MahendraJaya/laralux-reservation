@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\ProductController;
 use App\Models\Hotel;
 use Illuminate\Support\Facades\Route;
@@ -58,6 +59,7 @@ Route::get('/products', [ProductController::class, 'index'])->name('product.inde
  * Only routes accessible to owners and staff are defined here
  */
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function () {
+    // Define routes accessible to owners and staff here
     // Check if the user is a buyer, if so, return a message
     // $user = Auth::user();
     // if($user && $user->role == "pembeli"){
@@ -65,16 +67,25 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     // }
 
     // route untuk hotel
-    Route::get("hotel", [HotelController::class, "index"])->name("hotel.index");
+    // Route::get("hotel", [HotelController::class, "index"])->name("hotel.index");
+    Route::get("hotel/create", [HotelController::class, "createAdmin"])->name("hotel.createAdmin");
     Route::get("hotel/{hotels}", [HotelController::class, "showAdmin"])->name("hotel.showAdmin");
+    Route::get("/", [HotelController::class, "indexAdmin"])->name("hotel.indexAdmin");
+    Route::post("/", [HotelController::class, "storeAdmin"])->name("hotel.storeAdmin");
+    Route::get("hotel/{hotel}/edit", [HotelController::class, "editAdmin"])->name("hotel.editAdmin");
+    Route::match(['put', 'patch'], "/", [HotelController::class, "updateAdmin"])->name("hotel.updateAdmin");
+    // Route::get("hotel/{hotels}", [HotelController::class, "destroyAdmin"])->name("hotel.destroyAdmin");
 
     //route untuk product
     Route::get("hotel/{hotel}/product", [ProductController::class, "indexAdmin"])->name("product.indexAdmin");
     Route::get("hotel/{hotel}/product/create", [ProductController::class, "createAdmin"])->name("product.createAdmin");
     Route::post("hotel/{hotel}/product", [ProductController::class, "storeAdmin"])->name("product.storeAdmin");
+    Route::get("hotel/{hotel}/product/edit/{product}", [ProductController::class, "editAdmin"])->name("product.editAdmin");
+    Route::match(['put', 'patch'], "hotel/{hotel}/product/", [ProductController::class, "updateAdmin"])->name("product.updateAdmin");
+    Route::get("hotel/{hotel}/product/{product}", [ProductController::class, "showAdmin"])->name("product.showAdmin");
 
+    // route untuk membership
+    Route::get("membership", [MembershipController::class, "indexAdmin"])->name("membership.indexAdmin");
 
-
-    Route::get("/", [HotelController::class, "indexAdmin"])->name("hotel.indexAdmin");
-    // Define routes accessible to owners and staff here
+    
 });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Hotel;
 use App\Models\Product;
 use App\Models\TypeHotel;
+use App\Models\TypeProduct;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -72,7 +73,7 @@ class ProductController extends Controller
     }
 
     public function createAdmin(Hotel $hotel){
-        $types = TypeHotel::all();
+        $types = TypeProduct::all();
         return view('admin.product.create', compact('hotel', "types"));
     }
 
@@ -87,6 +88,29 @@ class ProductController extends Controller
         $product->type_product_id = $request->type_product_id;
         $product->hotel_id = $hotel->id;
         $product->save();
+        return redirect()->route('admin.product.indexAdmin', $hotel);
+    }
+
+    public function editAdmin(Hotel $hotel, Product $product){
+        $types = TypeProduct::all();
+        return view('admin.product.edit', compact('product', 'hotel', "types"));
+    }
+
+    public function showAdmin(Product $product, Hotel $hotel){
+        return view('admin.product.show', compact('product', 'hotel'));
+    }
+
+    public function updateAdmin(Request $request, Product $product, Hotel $hotel){
+        // dd($request->all());
+        $updatedProduct = $product;
+        $updatedProduct->name = $request->name;
+        $updatedProduct->price = $request->price;
+        $updatedProduct->capacity = $request->capacity;
+        $updatedProduct->available_room = $request->available_room;
+        $updatedProduct->image = "https://picsum.photos/200/300";
+        $updatedProduct->type_product_id = $request->type_product_id;
+        $updatedProduct->hotel_id = $hotel->id;
+        $updatedProduct->save();
         return redirect()->route('admin.product.indexAdmin', $hotel);
     }
 }

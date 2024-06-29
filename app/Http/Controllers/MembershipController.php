@@ -62,4 +62,9 @@ class MembershipController extends Controller
     {
         //
     }
+    
+    public function indexAdmin(){
+        $memberships = Membership::with("user")->get();
+        return view("admin.membership.index", compact("memberships"));
+    }
 }

@@ -28,6 +28,7 @@
                 <label class="form-label">City</label>
                 <input type="text" id="city" name="city" class="form-control">
             </div>
+            
             <div class="input-group input-group-outline mb-3">
                 <label class="form-label">Rating</label>
                 <input type="number" id="rating" name="rating" class="form-control">

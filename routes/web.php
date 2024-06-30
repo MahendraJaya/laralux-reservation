@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FacilitiesController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\ProductController;
@@ -65,6 +66,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     // if($user && $user->role == "pembeli"){
     //     return "Ini masuk owner atau staff";
     // }
+    Route::resource('hotel/{hotel}/facility', FacilitiesController::class);
 
     // route untuk hotel
     // Route::get("hotel", [HotelController::class, "index"])->name("hotel.index");
@@ -84,6 +86,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get("hotel/{hotel}/product/{product}", [ProductController::class, "showAdmin"])->name("product.showAdmin");
     Route::match(['put', 'patch'], '/admin/hotels/{hotel}/product/{product}', [ProductController::class, 'updateAdmin'])->name('product.updateAdmin');
 
+    //route untuk fasilitas
+    // Route::get('hotel/{hotel}/facility', [FacilitiesController::class, "index"])->name("facility.indexAdmin");
+    // Route::get('hotel/{hotel}/facility/create', [FacilitiesController::class, "create"])->name("facility.createAdmin");
+    // Route::post('hotel/{hotel}/facility', [FacilitiesController::class, "store"])->name("facility.storeAdmin");
+    // Route::delete("hotel/{hotel}/facility/{facility}", [FacilitiesController::class, "destroy"])->name("facility.destroyAdmin");
     // route untuk membership
     Route::get("membership", [MembershipController::class, "indexAdmin"])->name("membership.indexAdmin");
 

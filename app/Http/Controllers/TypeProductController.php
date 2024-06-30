@@ -12,7 +12,8 @@ class TypeProductController extends Controller
      */
     public function index()
     {
-        //
+        $typeProducts = TypeProduct::all();
+        return view('admin.type_product.index', compact('typeProducts'));
     }
 
     /**
@@ -20,7 +21,7 @@ class TypeProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.type_product.create');
     }
 
     /**
@@ -28,7 +29,10 @@ class TypeProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $type = new TypeProduct();
+        $type->name = $request->input('name');
+        $type->save();
+        return redirect()->route('admin.typeproduct.index');
     }
 
     /**
@@ -42,17 +46,19 @@ class TypeProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(TypeProduct $typeProduct)
+    public function edit(TypeProduct $typeproduct)
     {
-        //
+        return view('admin.type_product.edit', compact('typeproduct'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TypeProduct $typeProduct)
+    public function update(Request $request, TypeProduct $typeproduct)
     {
-        //
+        $typeproduct->name = $request->input('name');
+        $typeproduct->save();
+        return redirect()->route('admin.typeproduct.index');
     }
 
     /**

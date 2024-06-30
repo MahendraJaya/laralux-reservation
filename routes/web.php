@@ -4,6 +4,8 @@ use App\Http\Controllers\FacilitiesController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TypeHotelController;
+use App\Http\Controllers\TypeProductController;
 use App\Models\Hotel;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -67,6 +69,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     //     return "Ini masuk owner atau staff";
     // }
     Route::resource('hotel/{hotel}/facility', FacilitiesController::class);
+    Route::resource('typeproduct', TypeProductController::class);
+    Route::resource('typehotel', TypeHotelController::class);
 
     // route untuk hotel
     // Route::get("hotel", [HotelController::class, "index"])->name("hotel.index");

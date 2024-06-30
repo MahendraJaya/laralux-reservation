@@ -5,7 +5,7 @@
     </div>
 
     <div>
-        <form action="{{ route('admin.product.storeAdmin', $hotel) }}" method="post">
+        <form action="{{ route('admin.product.storeAdmin', $hotel) }}" method="post" enctype="multipart/form-data">  
             @csrf
             <div class="input-group input-group-outline my-3">
                 <label class="form-label">Name</label>
@@ -22,6 +22,10 @@
             <div class="input-group input-group-outline mb-3">
                 <label class="form-label">Available Room</label>
                 <input type="number" id="available_room" name="available_room" class="form-control">
+            </div>
+            <div class="input-group input-group-outline mb-3">
+                <label for="file_photo" class="form-label">input image</label>
+                <input class="form-control" type="file" id="file_photo" name="file_photo">
             </div>
             <div class="input-group input-group-outline mb-3">
                 

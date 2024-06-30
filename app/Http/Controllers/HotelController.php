@@ -7,6 +7,7 @@ use App\Models\TypeHotel;
 use App\Models\TypeProduct;
 use Illuminate\Http\Request;
 use Auth;
+use File;
 
 class HotelController extends Controller
 {
@@ -120,7 +121,7 @@ class HotelController extends Controller
         $hotel->address = $request->input('address');
         $hotel->telephone = $request->input('telephone');
         $hotel->email = $request->input("email");
-        $hotel->image = "new image";
+        $hotel->image = "Default Image";
         $hotel->city = $request->input("city");
         $hotel->rating = $request->input("rating");
         $hotel->type_hotel_id = $request->input("type_hotel_id");
@@ -137,19 +138,41 @@ class HotelController extends Controller
     }
 
     public function updateAdmin(Request $request)
-    {
-        $updatedHotel = Hotel::find($request->input('hotel_id'));
-        // dd($updatedHotel);
-        $updatedHotel->name = $request->input('name');
-        $updatedHotel->address = $request->input('address');
-        $updatedHotel->telephone = $request->input('telephone');
-        // $updatedHotel->email = $request->input("email");
-        $updatedHotel->image = "new image";
-        $updatedHotel->city = $request->input("city");
-        $updatedHotel->rating = $request->input("rating");
-        $updatedHotel->type_hotel_id = $request->input("type_hotel_id");
-        $updatedHotel->user_id = Auth::user()->id;
-        $updatedHotel->save();
-        return redirect()->route("admin.hotel.indexAdmin");
+{
+    $updatedHotel = Hotel::find($request->input('hotel_id'));
+
+    // Update basic fields
+    $updatedHotel->name = $request->input('name');
+    $updatedHotel->address = $request->input('address');
+    $updatedHotel->telephone = $request->input('telephone');
+    $updatedHotel->city = $request->input('city');
+    $updatedHotel->rating = $request->input('rating');
+    $updatedHotel->type_hotel_id = $request->input('type_hotel_id');
+    $updatedHotel->user_id = Auth::user()->id;
+
+    // Handle image upload
+    if ($request->hasFile('file_photo')) {
+        $file = $request->file('file_photo');
+        $folder = 'hotel/image';
+
+        // Delete existing image if it exists
+        if (!empty($updatedHotel->image) && File::exists(public_path($updatedHotel->image))) {
+            File::delete(public_path($updatedHotel->image));
+        }
+
+        // Move the new file to the target directory
+        $filename = time() . '_' . $file->getClientOriginalName();
+        
+        $file->move(public_path($folder), $filename);
+
+        // Update the image path
+        $updatedHotel->image = $folder . '/' . $filename;
     }
+    // dd($request->all());
+    // Save updated hotel details
+    $updatedHotel->save();
+
+    return redirect()->route('admin.hotel.indexAdmin');
+}
+
 }

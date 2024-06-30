@@ -6,7 +6,7 @@
     </div>
 
     <div>
-        <form action="{{ route('admin.hotel.updateAdmin') }}" method="POST">
+        <form action="{{ route('admin.hotel.updateAdmin') }}" method="POST" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             {{-- @dd($hotel) --}}
@@ -29,6 +29,10 @@
             <div class="input-group input-group-outline mb-3">
                 <label class="form-label">City</label>
                 <input type="text" id="city" name="city" value="{{ old('city', $hotel->city) }}" class="form-control">
+            </div>
+            <div class="input-group input-group-outline mb-3">
+                <label for="file_photo" class="form-label">input image</label>
+                <input class="form-control" type="file" id="file_photo" name="file_photo">
             </div>
             <div class="input-group input-group-outline mb-3">
                 <label class="form-label">Rating</label>

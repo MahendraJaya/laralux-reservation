@@ -6,7 +6,7 @@
     </div>
 
     <div>
-        <form action="{{ route('admin.hotel.storeAdmin') }}" method="post">
+        <form action="{{ route('admin.hotel.storeAdmin') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="input-group input-group-outline my-3">
                 <label class="form-label">Name</label>

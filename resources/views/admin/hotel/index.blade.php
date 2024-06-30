@@ -4,6 +4,12 @@
 <div>
   <a href="{{ route('admin.hotel.createAdmin') }}" class="btn btn-primary">Create Hotel</a>
 </div>
+<div>
+  <a href="{{ route('admin.typehotel.index') }}" class="btn btn-primary">TypeHotel</a>
+</div>
+<div>
+  <a href="{{ route('admin.typeproduct.index') }}" class="btn btn-primary">TypeProduct</a>
+</div>
 <table class="table">
     <thead>
       <tr>

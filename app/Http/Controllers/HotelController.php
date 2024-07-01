@@ -27,6 +27,7 @@ class HotelController extends Controller
         // return view("pagination", compact("hotels"));
     }
 
+
     /**
      * Show the form for creating a new resource.
      */
@@ -70,6 +71,14 @@ class HotelController extends Controller
         // disini taruh return view nya bisa pake -> dd untuk lihat nama variable
 
     }
+
+    public function showUserHotelDetail(Hotel $hotel)
+    {
+        $hotel = Hotel::where("id", $hotel->id)->with(["user", "typeHotel"])->first();
+
+        return view('user.hotel.detail-hotel', compact('hotel'));
+    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -116,6 +125,13 @@ class HotelController extends Controller
 
         return view("admin.hotel.index", compact("hotels"));
     }
+
+
+    public function indexUser()
+    {
+        // Munculkan data dengan pagination
+        $hotels = Hotel::paginate(6);
+        return view('user.hotel.index', compact('hotels'));
 
     public function showAdmin(Hotel $hotels)
     {

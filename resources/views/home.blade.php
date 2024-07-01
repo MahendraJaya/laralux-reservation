@@ -9,7 +9,7 @@
                     <ul class="nav flex-column">
                         <!-- Add more sidebar items as needed -->
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('hotel.index') }}">
+                            <a class="nav-link" href="{{ route('hotel.indexUser') }}">
                                 Hotel
                             </a>
                         </li>

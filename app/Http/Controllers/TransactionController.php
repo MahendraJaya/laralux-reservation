@@ -17,12 +17,13 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        return view('transaction.index');
+        return view('user.transaction.index');
     }
-    public function add($productId) {
+    public function add($productId)
+    {
         $product = Product::findOrFail($productId);
         $transaction = session()->get('transaction', []);
-        if(isset($transaction[$productId])) {
+        if (isset($transaction[$productId])) {
             $transaction[$productId]['quantity']++;
         } else {
             $transaction[$productId] = [
@@ -76,13 +77,34 @@ class TransactionController extends Controller
         $quantities = $request->quantities;
         $transaction = session()->get('transaction', []);
         foreach ($quantities as $id => $quantity) {
-            if(isset($transaction[$id])) {
+            if (isset($transaction[$id])) {
                 $transaction[$id]['quantity'] = $quantity;
             }
         }
         session()->put('transaction', $transaction);
         return redirect()->route('transaction.index')->with('success', 'Transaction updated!');
-   
+    }
+
+    public function addQty(Request $request, Transaction $transaction)
+    {
+        $id = $request->id;
+        $transaction = session()->get('transaction');
+        $product = Product::find($transaction[$id]['id']);
+        if (isset($transaction[$id])) {
+            $jumlahAwal = $transaction[$id]['quantity'];
+            $jumlahPesan = $jumlahAwal + 1;
+            if ($jumlahPesan < $product->available_room) {
+                $transaction[$id]['quantity']++;
+            } else {
+                return redirect()->back()->with('error', 'Jumlah pemesanan melebihi total kamar yang tersedia');
+            }
+        }
+        session()->forget('transaction');
+        session()->put('transaction', $transaction);
+    }
+
+    public function reduceQty(Request $request, Transaction $transaction)
+    {
     }
 
     /**
@@ -109,7 +131,7 @@ class TransactionController extends Controller
 
         foreach ($transaction as $productId => $details) {
             $product = Product::findOrFail($productId);
-            
+
             $newTransaction->product()->attach($product->id, [
                 'quantity' => $details['quantity'],
                 'subtotal' => $details['price'] * $details['quantity']
@@ -117,13 +139,14 @@ class TransactionController extends Controller
         }
 
         session()->forget('transaction');
-        
+
         return redirect()->route('transaction.index')->with('success', 'Transaction completed!');
     }
 
 
 
-    public function remove($productId) {
+    public function remove($productId)
+    {
         $transaction = session()->get('transaction', []);
         if (isset($transaction[$productId])) {
             unset($transaction[$productId]);

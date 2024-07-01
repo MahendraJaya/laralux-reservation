@@ -102,7 +102,7 @@ class HotelController extends Controller
 
     public function indexAdmin()
     {
-        gate-policies-routemiddleware-branch
+        
         $user = Auth::user();
         $this->authorize('create-hotel', $user);
 

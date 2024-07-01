@@ -102,8 +102,12 @@ class HotelController extends Controller
 
     public function indexAdmin()
     {
+        gate-policies-routemiddleware-branch
         $user = Auth::user();
         $this->authorize('create-hotel', $user);
+
+        $hotels = [];
+
         if (Auth::user()->role == "owner") {
             $hotels = Hotel::where("user_id", "=", Auth::user()->id)->with(["user", "typeHotel"])->get();
         } else if (Auth::user()->role == "staff") {

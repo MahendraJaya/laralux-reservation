@@ -96,7 +96,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
     // Route::post('hotel/{hotel}/facility', [FacilitiesController::class, "store"])->name("facility.storeAdmin");
     // Route::delete("hotel/{hotel}/facility/{facility}", [FacilitiesController::class, "destroy"])->name("facility.destroyAdmin");
     // route untuk membership
-    Route::get("membership", [MembershipController::class, "indexAdmin"])->name("membership.indexAdmin");
+    Route::resource('membership', MembershipController::class);
 
     
 });

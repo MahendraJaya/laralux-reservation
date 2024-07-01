@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Membership;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class MembershipController extends Controller
@@ -12,7 +13,8 @@ class MembershipController extends Controller
      */
     public function index()
     {
-        //
+        $memberships = Membership::with("user")->get();
+        return view("admin.membership.index", compact("memberships"));
     }
 
     /**
@@ -20,7 +22,8 @@ class MembershipController extends Controller
      */
     public function create()
     {
-        //
+        $users = User::all();
+        return view("admin.membership.create", compact("users"));
     }
 
     /**
@@ -28,7 +31,10 @@ class MembershipController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $member = new Membership();
+        $member->user_id = $request->input('user');
+        $member->save();
+        return redirect()->route("admin.membership.index");
     }
 
     /**
@@ -44,7 +50,8 @@ class MembershipController extends Controller
      */
     public function edit(Membership $membership)
     {
-        //
+        $users = User::all();
+        return view("admin.membership.edit", compact("membership", "users"));
     }
 
     /**
@@ -52,7 +59,10 @@ class MembershipController extends Controller
      */
     public function update(Request $request, Membership $membership)
     {
-        //
+        $membership->user_id = $request->input('user');
+        $membership->point = $request->input('point');
+        $membership->save();
+        return redirect()->route("admin.membership.index");
     }
 
     /**
@@ -60,7 +70,8 @@ class MembershipController extends Controller
      */
     public function destroy(Membership $membership)
     {
-        //
+        $membership->delete();
+        return redirect()->route("admin.membership.index");
     }
     
     public function indexAdmin(){

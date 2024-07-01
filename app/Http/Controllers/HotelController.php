@@ -132,7 +132,7 @@ class HotelController extends Controller
         // Munculkan data dengan pagination
         $hotels = Hotel::paginate(6);
         return view('user.hotel.index', compact('hotels'));
-
+    }
     public function showAdmin(Hotel $hotels)
     {
         $hotel = Hotel::where("id", $hotels->id)->with(["user", "typeHotel"])->first();

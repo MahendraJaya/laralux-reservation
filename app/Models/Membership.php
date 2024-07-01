@@ -10,6 +10,6 @@ class Membership extends Model
     use HasFactory;
 
     public function user(){
-        return $this->belongsTo(Membership::class, "user_id");
+        return $this->belongsTo(User::class, "user_id");
     }
 }

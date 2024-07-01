@@ -10,6 +10,9 @@
 <div>
   <a href="{{ route('admin.typeproduct.index') }}" class="btn btn-primary">TypeProduct</a>
 </div>
+<div>
+  <a href="{{ route('admin.membership.index') }}" class="btn btn-primary">Membership</a>
+</div>
 <table class="table">
     <thead>
       <tr>

@@ -6,8 +6,12 @@ use App\Models\Hotel;
 use App\Models\Product;
 use App\Models\TypeHotel;
 use App\Models\TypeProduct;
+use Faker\Core\File as CoreFile;
 use File;
+use Illuminate\Http\File as HttpFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File as FacadesFile;
 
 class ProductController extends Controller
 {
@@ -26,6 +30,11 @@ class ProductController extends Controller
     public function create()
     {
 
+        try {
+            //lanjut kode disini
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     /**
@@ -57,7 +66,8 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $user = Auth::user();
+        $this->authorize('create', $user);
     }
 
     /**
@@ -76,6 +86,8 @@ class ProductController extends Controller
 
     public function createAdmin(Hotel $hotel)
     {
+        $user = Auth::user();
+        $this->authorize('create-product', $user);
         $types = TypeProduct::all();
         return view('admin.product.create', compact('hotel', "types"));
     }
@@ -92,8 +104,8 @@ class ProductController extends Controller
         $folder = 'hotel/' . $hotel->id . "/product";
 
         // Check if the directory exists, if not create it
-        if (!File::isDirectory(public_path($folder))) {
-            File::makeDirectory(public_path($folder), 0755, true, true);
+        if (!FacadesFile::isDirectory(public_path($folder))) {
+            FacadesFile::makeDirectory(public_path($folder), 0755, true, true);
         }
 
         $filename = time() . "_" . $file->getClientOriginalName();
@@ -135,11 +147,11 @@ class ProductController extends Controller
             $filename = time() . "_" . $file->getClientOriginalName();
             $filePath = public_path($folder) . '/' . $filename;
 
-            File::delete(public_path($product->image));
+            FacadesFile::delete(public_path($product->image));
 
             // Ensure the directory exists, create if not
-            if (!File::isDirectory(public_path($folder))) {
-                File::makeDirectory(public_path($folder), 0755, true, true);
+            if (!FacadesFile::isDirectory(public_path($folder))) {
+                FacadesFile::makeDirectory(public_path($folder), 0755, true, true);
             }
 
             // Move the new file to the target directory

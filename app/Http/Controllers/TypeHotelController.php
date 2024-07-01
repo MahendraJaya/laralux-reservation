@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TypeHotel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TypeHotelController extends Controller
 {
@@ -21,6 +22,8 @@ class TypeHotelController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
+        $this->authorize('create-type', $user);
         return view('admin.type_hotel.create');
     }
 
@@ -41,6 +44,7 @@ class TypeHotelController extends Controller
     public function show(TypeHotel $typeHotel)
     {
         //
+
     }
 
     /**

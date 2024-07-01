@@ -47,7 +47,18 @@ class User extends Authenticatable
         return $this->hasMany(Hotel::class, "user_id");
     }
 
-    public function membership(){
-        return $this->hasMany(Membership::class, "user_id");
+    public function membership()
+    {
+        return $this->hasOne(Membership::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function isMember()
+    {
+        return $this->transactions()->exists();
     }
 }

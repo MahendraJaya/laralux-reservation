@@ -9,7 +9,9 @@ class Membership extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id', 'point'];
+    
     public function user(){
-        return $this->belongsTo(Membership::class, "user_id");
+        return $this->belongsTo(User::class);
     }
 }

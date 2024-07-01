@@ -6,8 +6,10 @@ use App\Models\Hotel;
 use App\Models\TypeHotel;
 use App\Models\TypeProduct;
 use Illuminate\Http\Request;
+
 // use Auth;
 use Illuminate\Support\Facades\File;
+
 use Illuminate\Support\Facades\Auth;
 
 class HotelController extends Controller

@@ -34,6 +34,10 @@
                             <span class="badge badge-pill badge-primary">{{ session('transaction') ? count(session('transaction')) : 0 }}</span>
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                            <a class="nav-link" href="{{ route('membership.index') }}">Membership</a>
+                        </li>
                 </ul>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">

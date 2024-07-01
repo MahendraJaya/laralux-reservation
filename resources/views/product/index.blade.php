@@ -1,13 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.frontend')
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h2>Products for {{ $hotel->name }}</h2>
-                </div>
+            <div class="card-header bg-transparent border-0">
                 <div class="card-body">
                     <div class="mt-4">
                         @if($products->isEmpty())
@@ -39,15 +36,16 @@
                                             <td>{{ $product->created_at }}</td>
                                             <td>{{ $product->updated_at }}</td>
                                             <td>
+                                                
                                                 <form action="{{ route('transaction.add', $product->id) }}" method="POST">
                                                     @csrf
                                                     <button type="submit" class="btn btn-primary">Buy</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                                </form> --}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
                        @endif
                     </div>
                 </div>

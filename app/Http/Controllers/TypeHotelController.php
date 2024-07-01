@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TypeHotel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TypeHotelController extends Controller
 {
@@ -12,7 +13,8 @@ class TypeHotelController extends Controller
      */
     public function index()
     {
-        //
+        $typeHotels = TypeHotel::all();
+        return view('admin.type_hotel.index', compact('typeHotels'));
     }
 
     /**
@@ -20,7 +22,9 @@ class TypeHotelController extends Controller
      */
     public function create()
     {
-        //
+        $user = Auth::user();
+        $this->authorize('create-type', $user);
+        return view('admin.type_hotel.create');
     }
 
     /**
@@ -28,7 +32,10 @@ class TypeHotelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $type = new TypeHotel();
+        $type->name = $request->input('name');
+        $type->save();
+        return redirect()->route('admin.typehotel.index');
     }
 
     /**
@@ -37,28 +44,32 @@ class TypeHotelController extends Controller
     public function show(TypeHotel $typeHotel)
     {
         //
+
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(TypeHotel $typeHotel)
+    public function edit(TypeHotel $typehotel)
     {
-        //
+        // dd($typehotel);
+        return view('admin.type_hotel.edit', compact('typehotel'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TypeHotel $typeHotel)
+    public function update(Request $request, TypeHotel $typehotel)
     {
-        //
+        $typehotel->name = $request->input('name');
+        $typehotel->save();
+        return redirect()->route('admin.typehotel.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TypeHotel $typeHotel)
+    public function destroy(TypeHotel $typehotel)
     {
         //
     }

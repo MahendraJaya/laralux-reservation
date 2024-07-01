@@ -197,17 +197,4 @@ class TransactionController extends Controller
 
         return redirect()->route('transaction.index')->with('success', 'Transaction completed!');
     }
-
-
-
-    public function remove($productId)
-    {
-        $transaction = session()->get('transaction', []);
-        if (isset($transaction[$productId])) {
-            unset($transaction[$productId]);
-            session()->put('transaction', $transaction);
-        }
-        return redirect()->route('transaction.index')->with('success', 'Product removed from transaction!');
-
-    }
 }

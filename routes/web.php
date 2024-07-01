@@ -10,7 +10,6 @@ use App\Models\Hotel;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\MembershipController;
 
 /*
 |--------------------------------------------------------------------------

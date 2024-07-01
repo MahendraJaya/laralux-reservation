@@ -11,10 +11,10 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Hotel $hotel)
+    public function index(Product $product)
     {
-        $products = Product::where('hotel_id', $hotel->id)->get();
-        return view('product.index', compact('products', 'hotel'));
+        $products = Product::paginate(6);
+        return view('product.index', compact('products'));
     }
 
     /**
@@ -39,6 +39,19 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         //
+    }
+
+    public function showHotelProduct(Hotel $hotel)
+    {
+        $products = Product::where('hotel_id', $hotel->id)->get();
+        return view('user.product.index', compact('products', 'hotel'));
+    }
+
+    public function showUserProductDetail($hotelId, $productId)
+    {
+        $product = Product::where("id", $productId)->with(["typeProduct"])->first();
+
+        return view('user.product.product-detail', compact('product'));
     }
 
     /**

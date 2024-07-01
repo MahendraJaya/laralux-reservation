@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Hotel;
 use App\Models\TypeProduct;
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class HotelController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    
+
     public function index()
     {
         //munculkan data dengan pagination
@@ -23,6 +23,7 @@ class HotelController extends Controller
         // nanti view nya di sini
         // return view("pagination", compact("hotels"));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -46,7 +47,6 @@ class HotelController extends Controller
         $hotel->type_hotel_id = $request->input("type_hotel_id");
         $hotel->user_id = Auth::user()->id;
         $hotel->save();
-
     }
 
     /**
@@ -61,6 +61,14 @@ class HotelController extends Controller
 
     }
 
+    public function showUserHotelDetail(Hotel $hotel)
+    {
+        $hotel = Hotel::where("id", $hotel->id)->with(["user", "typeHotel"])->first();
+
+        return view('user.hotel.detail-hotel', compact('hotel'));
+    }
+
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -69,7 +77,7 @@ class HotelController extends Controller
         //ambil data hotel dan tipe produk
         $hotel = $hotels;
         $typeProducts = TypeProduct::all();
-        
+
         //return view di sini
     }
 
@@ -93,10 +101,17 @@ class HotelController extends Controller
     {
         if (Auth::user()->role == "owner") {
             $hotels = Hotel::where("user_id", "=", Auth::user()->id)->with(["user", "typeHotel"])->get();
-        } else if(Auth::user()->role == "staff"){
+        } else if (Auth::user()->role == "staff") {
             $hotels = Hotel::with(["user", "typeHotel"])->get();
         }
 
         return view("admin.hotel.index", compact("hotels"));
+    }
+
+    public function indexUser()
+    {
+        // Munculkan data dengan pagination
+        $hotels = Hotel::paginate(6);
+        return view('user.hotel.index', compact('hotels'));
     }
 }

@@ -61,7 +61,7 @@ Route::get('/products', [ProductController::class, 'index'])->name('product.inde
  * Route group for admin section that requires authentication
  * Only routes accessible to owners and staff are defined here
  */
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'check.role:pembeli']], function () {
     // Define routes accessible to owners and staff here
     // Check if the user is a buyer, if so, return a message
     // $user = Auth::user();

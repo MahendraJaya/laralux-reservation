@@ -3,7 +3,12 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+
+use App\Policies\HotelPolicy;
+use App\Policies\ProductPolicy;
+use App\Policies\TypePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -22,5 +27,15 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+        $this->registerPolicies();
+        Gate::define('create-hotel', 'App\Policies\HotelPolicy@create');
+        Gate::define('create-type', 'App\Policies\TypePolicy@create');
+        Gate::define('create-product', 'App\Policies\ProductPolicy@create');
+
+        Gate::define('delete-hotel', 'App\Policies\HotelPolicy@delete');
+        Gate::define('delete-type', 'App\Policies\TypePolicy@delete');
+        Gate::define('delete-product', 'App\Policies\ProductPolicy@delete');
+
+
     }
 }

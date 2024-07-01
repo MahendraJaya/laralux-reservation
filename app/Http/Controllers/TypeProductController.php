@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TypeProduct;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TypeProductController extends Controller
 {
@@ -21,6 +22,8 @@ class TypeProductController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
+        $this->authorize('create-type', $user);
         return view('admin.type_product.create');
     }
 

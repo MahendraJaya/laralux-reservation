@@ -39,6 +39,7 @@
                                             <td>{{ $product->created_at }}</td>
                                             <td>{{ $product->updated_at }}</td>
                                             <td>
+                                                
                                                 <form action="{{ route('transaction.add', $product->id) }}" method="POST">
                                                     @csrf
                                                     <button type="submit" class="btn btn-primary">Buy</button>

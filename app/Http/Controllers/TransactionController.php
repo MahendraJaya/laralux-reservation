@@ -19,7 +19,7 @@ class TransactionController extends Controller
         $pointDiscount = session()->get('point_discount', 0);
         $finalTotal = $totalWithTax - $pointDiscount;
 
-        return view('transaction.index', compact('total', 'totalWithTax', 'pointDiscount', 'finalTotal'));
+        return view('user.transaction.index', compact('total', 'totalWithTax', 'pointDiscount', 'finalTotal'));
     }
 
 

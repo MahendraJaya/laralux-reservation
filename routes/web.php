@@ -90,11 +90,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
     // Route::get("hotel/{hotels}", [HotelController::class, "destroyAdmin"])->name("hotel.destroyAdmin");
 
     //route untuk product
-    Route::get("hotel/{hotel}/product", [ProductController::class, "indexAdmin"])->name("product.indexAdmin");
+    // Route::get("hotel/{hotel}/product", [ProductController::class, "indexAdmin"])->name("admin.product.indexAdmin");
+    Route::get("admin/product", [ProductController::class, "indexAdmin"])->name("product.indexAdmin");
     Route::get("hotel/{hotel}/product/create", [ProductController::class, "createAdmin"])->name("product.createAdmin");
     Route::post("hotel/{hotel}/product", [ProductController::class, "storeAdmin"])->name("product.storeAdmin");
     Route::get("hotel/{hotel}/product/edit/{product}", [ProductController::class, "editAdmin"])->name("product.editAdmin");
     Route::get("hotel/{hotel}/product/{product}", [ProductController::class, "showAdmin"])->name("product.showAdmin");
+
     Route::match(['put', 'patch'], '/admin/hotels/{hotel}/product/{product}', [ProductController::class, 'updateAdmin'])->name('product.updateAdmin');
 
     //route untuk fasilitas

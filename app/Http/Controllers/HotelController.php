@@ -115,15 +115,17 @@ class HotelController extends Controller
         $user = Auth::user();
         $this->authorize('create-hotel', $user);
 
-        $hotels = [];
 
         if (Auth::user()->role == "owner") {
-            $hotels = Hotel::where("user_id", "=", Auth::user()->id)->with(["user", "typeHotel"])->get();
+            $hotels = Hotel::where("user_id", $user->id)->with(["user", "typeHotel"])->get();
+            return view("admin.hotel.index", compact("hotels"));
+
         } else if (Auth::user()->role == "staff") {
             $hotels = Hotel::with(["user", "typeHotel"])->get();
+            return view("admin.hotel.index", compact("hotels"));
+
         }
 
-        return view("admin.hotel.index", compact("hotels"));
     }
 
 

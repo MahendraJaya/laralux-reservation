@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Request;
 
 class LoginController extends Controller
 {
@@ -36,5 +37,25 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
+    }
+
+        /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    
+    protected function authenticated(Request $request, $user)
+    {
+        // Assign role if it doesn't exist
+
+        // Example: Redirect based on role
+        if ($user->role === 'owner' || $user->role === 'staff') {
+            return redirect('/admin');
+        } elseif ($user->role === 'pembeli') {
+            return redirect('/home');
+        }
     }
 }

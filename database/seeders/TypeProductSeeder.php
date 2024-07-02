@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class TypeProductSeeder extends Seeder
 {
@@ -13,13 +13,18 @@ class TypeProductSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 0; $i < 10; $i++) {
-            DB::table('type_products')
-                ->insert(
-                    [
-                        'name' => "Tipe Product : $i",
-                    ]
-                );
-        } 
+        DB::table('type_products')
+            ->insert(
+                [
+                    ['name'=>'Standar'],
+                    ['name'=>'Deluxe'],
+                    ['name'=>'Superior'],
+                    ['name'=>'Single Room'],
+                    ['name'=>'Double Room'],
+                    ['name'=>'Family Room'],
+
+
+                ]
+            );
     }
 }

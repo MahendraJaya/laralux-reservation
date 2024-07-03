@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +20,9 @@ class CheckUserRole
         $user = Auth::user();
 
         if ($user && $user->role == $role) {
-            return abort(404);
+
+            return abort(403);
+
         }
 
         return $next($request);

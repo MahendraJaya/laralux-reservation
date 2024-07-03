@@ -14,17 +14,17 @@ class TypeProductSeeder extends Seeder
     public function run(): void
     {
         DB::table('type_products')
-            ->insert(
-                [
-                    ['name'=>'Standar'],
-                    ['name'=>'Deluxe'],
-                    ['name'=>'Superior'],
-                    ['name'=>'Single Room'],
-                    ['name'=>'Double Room'],
-                    ['name'=>'Family Room'],
+        ->insert(
+            [
+                ['name'=>'Standar'],
+                ['name'=>'Deluxe'],
+                ['name'=>'Superior'],
+                ['name'=>'Single Room'],
+                ['name'=>'Double Room'],
+                ['name'=>'Family Room'],
 
 
-                ]
-            );
+            ]
+        );
     }
 }

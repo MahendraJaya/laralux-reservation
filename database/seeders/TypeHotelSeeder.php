@@ -14,19 +14,19 @@ class TypeHotelSeeder extends Seeder
     public function run(): void
     {
         DB::table('type_hotels')
-            ->insert(
+        ->insert(
+            [
                 [
-                    [
-                        'name' => "City Hotel"
-                    ],
-                    [
-                        'name' => "Residential Hotel"
+                    'name' => "City Hotel"
+                ],
+                [
+                    'name' => "Residential Hotel"
 
-                    ],
-                    [
-                        'name' => "Motel"
-                    ]
+                ],
+                [
+                    'name' => "Motel"
                 ]
-            );
+            ]
+        );
     }
 }

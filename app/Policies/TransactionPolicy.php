@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class TransactionPolicy
 {
@@ -12,5 +13,9 @@ class TransactionPolicy
     public function __construct()
     {
         //
+    }
+
+    public function delete(User $user){
+        return($user->role =='owner' ? Response::allow() : Response::deny('Only owner can delete transaction'));
     }
 }

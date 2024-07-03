@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -19,7 +20,6 @@ class DatabaseSeeder extends Seeder
             DB::statement('ALTER TABLE '.$table_name.' AUTO_INCREMENT = 1;');
 
         }
-
         $this->call([
             // UserSeeder::class,
 

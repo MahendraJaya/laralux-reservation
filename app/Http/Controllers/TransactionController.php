@@ -232,4 +232,59 @@ class TransactionController extends Controller
 
         return redirect()->route('transaction.index')->with('success', 'Transaction completed!');
     }
+
+    // public function remove($productId)
+    // {
+    //     $transaction = session()->get('transaction', []);
+    //     if (isset($transaction[$productId])) {
+    //         unset($transaction[$productId]);
+    //         session()->put('transaction', $transaction);
+    //     }
+    //     return redirect()->route('transaction.index')->with('success', 'Product removed from transaction!');
+
+    // }
+
+    public function indexAdmin(Request $request){
+        $role = Auth::user()->role;
+        if($role == 'owner'){
+            $userId = Auth::id();
+            $ownerId = Auth::id();
+            $transactions = Transaction::select('transactions.*')
+            ->join('product_transaction', 'transactions.id', '=', 'product_transaction.transaction_id')
+            ->join('products', 'product_transaction.product_id', '=', 'products.id')
+            ->join('hotels', 'products.hotel_id', '=', 'hotels.id')
+            ->where('hotels.user_id', $userId)
+            ->get();            
+            return view('admin.transaction.index', compact('transactions'));
+
+        }
+
+        else if($role == 'staff'){ 
+            $transactions = Transaction::all();
+            return view('admin.transaction.index', compact('transactions'));
+        }
+    }
+
+    public function showAdmin(Transaction $transactions){
+        $role = Auth::user()->role;
+        return view('admin.transaction.show', compact('transactions'));
+        
+    }
+
+    public function destroyAdmin(Request $request){
+        $user = Auth::user();
+        $this->authorize('delete-transaction', $user);
+        try {
+            $transactionId = $request->id;
+            $transaction = Transaction::find($transactionId);
+            $transaction->delete();
+
+            return redirect()->route('admin.transaction.index')->with('status', 'Delete Transaction Successful');
+        } catch (\Throwable $th) {
+
+            return redirect()->route('admin.transaction.index')->with('status', $th);
+        }
+        
+    }
+
 }

@@ -23,7 +23,7 @@
       <td>{{ $hotel->user->name }}</td>
       <td>
         <a href="{{ route('admin.hotel.showAdmin', $hotel) }}" class="btn btn-primary">Detail</a>
-        ||
+        @can('delete-hotel', Auth::user())        ||
         <a href="{{ route('admin.hotel.editAdmin', $hotel) }}" class="btn btn-secondary">Edit</a>
       </td>
       ||
@@ -34,6 +34,7 @@
           <input type="submit" value="delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete Transaction')">
         </form>
       </td>
+      @endcan
     </tr>
     @endforeach
   </tbody>

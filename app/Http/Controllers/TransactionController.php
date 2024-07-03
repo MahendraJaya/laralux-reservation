@@ -57,20 +57,20 @@ class TransactionController extends Controller
 
     public function addQty(Request $request, Transaction $transaction)
     {
-        $id = $request->id;
-        $transaction = session()->get('transaction');
-        $product = Product::find($transaction[$id]['id']);
-        if (isset($transaction[$id])) {
-            $jumlahAwal = $transaction[$id]['quantity'];
-            $jumlahPesan = $jumlahAwal + 1;
-            if ($jumlahPesan < $product->available_room) {
-                $transaction[$id]['quantity']++;
-            } else {
-                return redirect()->back()->with('error', 'Jumlah pemesanan melebihi total kamar yang tersedia');
-            }
-        }
-        session()->forget('transaction');
-        session()->put('transaction', $transaction);
+        // $id = $request->id;
+        // $transaction = session()->get('transaction');
+        // $product = Product::find($transaction[$id]['id']);
+        // if (isset($transaction[$id])) {
+        //     $jumlahAwal = $transaction[$id]['quantity'];
+        //     $jumlahPesan = $jumlahAwal + 1;
+        //     if ($jumlahPesan < $product->available_room) {
+        //         $transaction[$id]['quantity']++;
+        //     } else {
+        //         return redirect()->back()->with('error', 'Jumlah pemesanan melebihi total kamar yang tersedia');
+        //     }
+        // }
+        // session()->forget('transaction');
+        // session()->put('transaction', $transaction);
     }
 
     public function reduceQty(Request $request, Transaction $transaction)

@@ -22,7 +22,7 @@ use App\Http\Controllers\TransactionController;
 |
 */
 
-Route::get('/', function () {
+Route::get('/home', function () {
     if(Auth::user()->role == "owner"){
         return "Ini masuk owner";
     }else if(Auth::user()->role == "staff"){

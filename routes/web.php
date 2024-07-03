@@ -50,6 +50,7 @@ Route::get('/user/hotel/{hotel}', [HotelController::class, 'showUserHotelDetail'
 
 Route::post('user/transaction/add/{product}', [TransactionController::class, 'add'])->name('transaction.add');
 Route::get('user/transaction', [TransactionController::class, 'index'])->name('transaction.index');
+Route::get('user/transaction/all', [TransactionController::class, 'indexUser'])->name('transaction.indexUser');
 Route::post('user/transaction/update', [TransactionController::class, 'update'])->name('transaction.update');
 Route::post('user/transaction/checkout', [TransactionController::class, 'checkout'])->name('transaction.checkout');
 Route::post('user/transaction/remove/{product}', [TransactionController::class, 'remove'])->name('transaction.remove');

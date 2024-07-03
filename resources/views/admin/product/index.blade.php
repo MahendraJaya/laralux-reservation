@@ -1,7 +1,9 @@
 @extends('layouts.dashboard')
 @section('content')
 <div>
-    <a href="{{ route('admin.product.createAdmin', $hotel) }}" class="btn btn-primary">Create Product</a>
+@can('create-product', Auth::user())
+<a href="{{ route('admin.product.createAdmin', $hotel) }}" class="btn btn-primary">Create Product</a>
+@endcan
 </div>
 <div class="table-responsive">
     <table class="table table-primary">

@@ -15,7 +15,7 @@ class MembershipController extends Controller
     public function index()
     {
         $membership = Membership::where('user_id', Auth::id())->first();
-        return view('membership.index', compact('membership'));
+        return view('user.membership.index', compact('membership'));
     }
 
     /**

@@ -13,6 +13,25 @@ class TransactionController extends Controller
 {
     public function index()
     {
+
+        $role = Auth::user()->role;
+        if($role == 'owner'){
+            $ownerId = Auth::id();
+            $transactions = Transaction::where('owner', $ownerId)->get();
+            return view('admin.transaction.index', compact('transactions'));
+
+        }
+
+        else if($role == 'staff'){ 
+            $transactions = Transaction::all();
+            return view('admin.transaction.index', compact('transactions'));
+        }
+
+        else{
+            $userId = Auth::id();
+            $transactions = Transaction::where('user_id', $userId);
+            return view('user.transaction.index', compact('transactions'));
+        }
         $transaction = session()->get('transaction', []);
         $total = $this->calculateTotal($transaction);
         $totalWithTax = $total * 1.11;

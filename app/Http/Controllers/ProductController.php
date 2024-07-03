@@ -94,7 +94,7 @@ class ProductController extends Controller
     public function indexAdmin(Hotel $hotel)
     {
         $products = Product::where('hotel_id', $hotel->id)->get();
-        return view('admin.product.index', compact('products', 'hotel'));
+        return view('admin.product.index', compact('hotel','products'));
     }
 
     public function createAdmin(Hotel $hotel)

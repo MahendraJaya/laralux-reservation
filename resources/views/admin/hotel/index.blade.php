@@ -1,6 +1,6 @@
 @extends("layouts.dashboard")
 @section("content")
-<h1>Hallo</h1>
+<h1>Hello, {{Auth::user()->name}}</h1>
 <div>
   <a href="{{ route('admin.hotel.createAdmin') }}" class="btn btn-primary">Create Hotel</a>
 </div>

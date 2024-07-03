@@ -25,7 +25,8 @@ class HotelSeeder extends Seeder
                 'city' => 'Los Angeles',
                 'rating' => 5,
                 'image' => 'https://example.com/hotel-bel-air.jpg',
-                'user_id' => rand(1, 5), // Random user_id from 0 to 9
+
+                'user_id' => rand(1,5), // Random user_id from 0 to 9
                 'type_hotel_id' => 1, // Example: Type Hotel: City Hotel
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -38,7 +39,8 @@ class HotelSeeder extends Seeder
                 'city' => 'New York',
                 'rating' => 5,
                 'image' => 'https://example.com/ritz-carlton-nyc.jpg',
-                'user_id' => rand(1, 5), // Random user_id from 0 to 9
+
+                'user_id' => rand(1,5), // Random user_id from 0 to 9
                 'type_hotel_id' => 2, // Example: Type Hotel: Residential Hotel
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -51,7 +53,9 @@ class HotelSeeder extends Seeder
                 'city' => 'Singapore',
                 'rating' => 5,
                 'image' => 'https://example.com/marina-bay-sands.jpg',
-                'user_id' => rand(1, 5), // Random user_id from 0 to 9
+
+                'user_id' => rand(1,5), // Random user_id from 0 to 9
+
                 'type_hotel_id' => 3, // Example: Type Hotel: Motel
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -64,7 +68,8 @@ class HotelSeeder extends Seeder
                 'city' => 'Paris',
                 'rating' => 5,
                 'image' => 'https://example.com/peninsula-paris.jpg',
-                'user_id' => rand(1, 5), // Random user_id from 0 to 9
+
+                'user_id' => rand(1,5), // Random user_id from 0 to 9
                 'type_hotel_id' => 1, // Example: Type Hotel: City Hotel
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -77,7 +82,9 @@ class HotelSeeder extends Seeder
                 'city' => 'Sydney',
                 'rating' => 5,
                 'image' => 'https://example.com/four-seasons-sydney.jpg',
-                'user_id' => rand(1, 5), // Random user_id from 0 to 9
+
+                'user_id' => rand(1,5), // Random user_id from 0 to 9
+
                 'type_hotel_id' => 2, // Example: Type Hotel: Residential Hotel
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -90,7 +97,8 @@ class HotelSeeder extends Seeder
                 'city' => 'Dubai',
                 'rating' => 5,
                 'image' => 'https://example.com/atlantis-dubai.jpg',
-                'user_id' => rand(1, 5), // Random user_id from 0 to 9
+
+                'user_id' => rand(1,5), // Random user_id from 0 to 9
                 'type_hotel_id' => 3, // Example: Type Hotel: Motel
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -103,7 +111,8 @@ class HotelSeeder extends Seeder
                 'city' => 'Portofino',
                 'rating' => 5,
                 'image' => 'https://example.com/hotel-splendido.jpg',
-                'user_id' => rand(1, 5), // Random user_id from 0 to 9
+
+                'user_id' => rand(1,5), // Random user_id from 0 to 9
                 'type_hotel_id' => 1, // Example: Type Hotel: City Hotel
                 'created_at' => now(),
                 'updated_at' => now(),

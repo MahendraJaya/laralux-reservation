@@ -10,37 +10,17 @@
                         @if($products->isEmpty())
                             <p>No products available for this hotel.</p>
                         @else
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Price</th>
-                                        <th>Capacity</th>
-                                        <th>Image</th>
-                                        <th>Available Room</th>
-                                        <th>Type Product</th>
-                                        <th>Created At</th>
-                                        <th>Updated At</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($products as $product)
-                                        <tr>
-                                            <td>{{ $product->name }}</td>
-                                            <td>{{ $product->price }}</td>
-                                            <td>{{ $product->capacity }}</td>
-                                            <td><img src="{{ $product->image }}" alt="Product Image" width="100"></td>
-                                            <td>{{ $product->available_room }}</td>
-                                            <td>{{ $product->typeProduct->name }}</td>
-                                            <td>{{ $product->created_at }}</td>
-                                            <td>{{ $product->updated_at }}</td>
-                                            <td>
-                                                
-                                                <form action="{{ route('transaction.add', $product->id) }}" method="POST">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-primary">Buy</button>
-                                                </form> --}}
+                            <div class="row">
+                                @foreach($products as $product)
+                                    <div class="col-md-4">
+                                        <div class="card mb-4">
+                                            <img class="card-img-top" src="{{ $product->image }}" alt="Product Image" style="height: 200px; object-fit: cover;">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ $product->name }}</h5>
+                                                <p class="card-text"><strong>Price:</strong> {{ $product->price }}</p>
+                                                <p class="card-text"><strong>Capacity:</strong> {{ $product->capacity }}</p>
+                                                <p class="card-text"><strong>Available Room:</strong> {{ $product->available_room }}</p>
+                                                <p class="card-text"><strong>Type:</strong> {{ $product->typeProduct->name }}</p>
                                             </div>
                                         </div>
                                     </div>

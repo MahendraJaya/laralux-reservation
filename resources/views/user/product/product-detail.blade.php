@@ -24,7 +24,7 @@
                 <div class="card-footer text-center">
                     <form action="{{ route('transaction.add', $product->id) }}" method="POST">
                         @csrf
-                        <button type="submit" class="btn btn-primary">Buy</button>
+                        <button type="submit" class="btn btn-primary">Add to Cart</button>
                     </form>
                 </div>
             </div>

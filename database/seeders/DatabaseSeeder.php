@@ -20,9 +20,9 @@ class DatabaseSeeder extends Seeder
             DB::statement('ALTER TABLE '.$table_name.' AUTO_INCREMENT = 1;');
 
         }
-        
         $this->call([
-            UserSeeder::class,
+            // UserSeeder::class,
+
             TypeHotelSeeder::class,
             TypeProductSeeder::class,
             HotelSeeder::class,

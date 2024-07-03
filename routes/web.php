@@ -9,7 +9,6 @@ use App\Models\Hotel;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\MembershipController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +21,7 @@ use App\Http\Controllers\MembershipController;
 |
 */
 
-Route::get('/', function () {
+Route::get('/home', function () {
     if(Auth::user()->role == "owner"){
         return "Ini masuk owner";
     }else if(Auth::user()->role == "staff"){
@@ -48,17 +47,18 @@ Route::get('user/hotel', [HotelController::class, 'indexUser'])->name('hotel.ind
 Route::get('/user/hotel/{hotel}', [HotelController::class, 'showUserHotelDetail'])->name('hotel.showUserHotel');
 
 
-Route::post('/transaction/add/{product}', [TransactionController::class, 'add'])->name('transaction.add');
-Route::get('/transaction', [TransactionController::class, 'index'])->name('transaction.index');
+Route::post('user/transaction/add/{product}', [TransactionController::class, 'add'])->name('transaction.add');
+Route::get('user/transaction', [TransactionController::class, 'index'])->name('transaction.index');
+Route::get('user/transaction/all', [TransactionController::class, 'indexUser'])->name('transaction.indexUser');
+Route::post('user/transaction/update', [TransactionController::class, 'update'])->name('transaction.update');
+Route::post('user/transaction/checkout', [TransactionController::class, 'checkout'])->name('transaction.checkout');
+Route::post('user/transaction/remove/{product}', [TransactionController::class, 'remove'])->name('transaction.remove');
+Route::post('user/transactions/apply-points', [TransactionController::class, 'applyPoints'])->name('transaction.applyPoints');
 
-Route::post('/transaction/update', [TransactionController::class, 'update'])->name('transaction.update');
-Route::post('/transaction/checkout', [TransactionController::class, 'checkout'])->name('transaction.checkout');
-Route::post('/transaction/remove/{product}', [TransactionController::class, 'remove'])->name('transaction.remove');
-Route::post('/transactions/apply-points', [TransactionController::class, 'applyPoints'])->name('transaction.applyPoints');
 //Route::get('/membership/points', [TransactionController::class, 'showPoints'])->name('membership.index');
 
-Route::post('/transaction/redeem-points', [TransactionController::class, 'redeemPoints'])->name('transaction.redeem-points');
-Route::get('/membership', [MembershipController::class, 'index'])->name('membership.index');
+Route::post('user/transaction/redeem-points', [TransactionController::class, 'redeemPoints'])->name('transaction.redeem-points');
+Route::get('user/membership', [MembershipController::class, 'index'])->name('membership.index');
 
 Route::get('user/hotel/{hotel}/products', [ProductController::class, 'showHotelProduct'])->name('hotel.products');
 // Route::get('user/hotel/{hotelId}/products', [HotelController::class, 'showHotelProducts'])->name('product.index');
@@ -98,12 +98,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
     // Route::get("hotel/{hotels}", [HotelController::class, "destroyAdmin"])->name("hotel.destroyAdmin");
 
     //route untuk product
-    Route::get("hotel/{hotel}/product", [ProductController::class, "indexAdmin"])->name("product.index");
+
+    // Route::get("hotel/{hotel}/product", [ProductController::class, "indexAdmin"])->name("admin.product.indexAdmin");
+    Route::get("admin/product", [ProductController::class, "indexAdmin"])->name("product.indexAdmin");
+
     Route::get("hotel/{hotel}/product/create", [ProductController::class, "createAdmin"])->name("product.createAdmin");
     Route::post("hotel/{hotel}/product", [ProductController::class, "storeAdmin"])->name("product.storeAdmin");
     Route::get("hotel/{hotel}/product/edit/{product}", [ProductController::class, "editAdmin"])->name("product.editAdmin");
     Route::get("hotel/{hotel}/product/{product}", [ProductController::class, "showAdmin"])->name("product.showAdmin");
+
     Route::post("hotel/{hotel}/product/{product}", [ProductController::class, "destroyAdmin"])->name("product.destroy");
+
 
     Route::match(['put', 'patch'], '/admin/hotels/{hotel}/product/{product}', [ProductController::class, 'updateAdmin'])->name('product.updateAdmin');
 

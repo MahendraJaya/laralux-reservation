@@ -1,22 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.frontend')
 
 @section('content')
 <div class="container-fluid">
-    <div class="row">
-        <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-            <div class="position-sticky">
-                <div class="sidebar-sticky">
-                    <ul class="nav flex-column">
-                        <!-- Add more sidebar items as needed -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('hotel.indexUser') }}">
-                                Hotel
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+
 
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div class="card">
@@ -35,4 +21,5 @@
         </main>
     </div>
 </div>
+<br>
 @endsection

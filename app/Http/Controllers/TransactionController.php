@@ -15,19 +15,21 @@ class TransactionController extends Controller
     {
 
         $role = Auth::user()->role;
-        if($role == 'owner'){
+        if ($role == 'owner') {
             $ownerId = Auth::id();
             $transactions = Transaction::where('owner', $ownerId)->get();
             return view('admin.transaction.index', compact('transactions'));
 
-        }
-
-        else if($role == 'staff'){ 
+        } else if ($role == 'staff') {
             $transactions = Transaction::all();
             return view('admin.transaction.index', compact('transactions'));
         }
 
-        
+        // else{
+        //     $userId = Auth::id();
+        //     $transactions = Transaction::where('user_id', $userId);
+        //     return view('user.transaction.index', compact('transactions'));
+        // }
         $transaction = session()->get('transaction', []);
         $total = $this->calculateTotal($transaction);
         $totalWithTax = $total * 1.11;
@@ -35,6 +37,23 @@ class TransactionController extends Controller
         $finalTotal = $totalWithTax - $pointDiscount;
 
         return view('user.transaction.index', compact('total', 'totalWithTax', 'pointDiscount', 'finalTotal'));
+    }
+
+    public function indexUser()
+    {
+        $userId = Auth::user()->id;
+        $transactions = Transaction::with('product')->where('user_id', $userId)->get();
+        $total = 0;
+        foreach ($transactions as $transaction) {
+            foreach ($transaction->product as $product) {
+                $total += $product->pivot->subtotal;
+            }
+        }
+        $totalWithTax = $total * 1.11;
+        $pointDiscount = session()->get('point_discount', 0);
+        $finalTotal = $totalWithTax - $pointDiscount;
+
+        return view('user.transaction.indexAll', compact('transactions', 'total', 'totalWithTax', 'pointDiscount', 'finalTotal'));
     }
 
 
@@ -93,7 +112,8 @@ class TransactionController extends Controller
 
     }
 
-    public function remove($productId) {
+    public function remove($productId)
+    {
         $transaction = session()->get('transaction', []);
         if (isset($transaction[$productId])) {
             unset($transaction[$productId]);
@@ -137,20 +157,20 @@ class TransactionController extends Controller
     public function checkout(Request $request)
     {
         $transaction = session()->get('transaction', []);
-    
+
         if (empty($transaction)) {
             return redirect()->route('transaction.index')->with('error', 'Your transaction is empty!');
         }
-    
+
         $totalAmount = 0;
         $pointsEarned = 0;
-    
+
         // Calculate total amount and points first
         foreach ($transaction as $productId => $details) {
             $subtotal = $details['price'] * $details['quantity'];
             $subtotalWithTax = $subtotal * 1.11;
             $totalAmount += $subtotalWithTax;
-    
+
             // Calculate points
             $product = Product::findOrFail($productId);
             if ($product->type_product && in_array($product->type_product->name, ['deluxe', 'superior', 'suite'])) {
@@ -159,12 +179,12 @@ class TransactionController extends Controller
                 $pointsEarned += floor($subtotal / 300000);
             }
         }
-    
+
         // Apply point discount
         $redeemedPoints = session()->get('redeemed_points', 0);
         $pointDiscount = session()->get('point_discount', 0);
         $finalTotal = $totalAmount - $pointDiscount;
-    
+
         // Create and save the transaction
         $newTransaction = new Transaction();
         $newTransaction->user_id = Auth::id();
@@ -174,20 +194,20 @@ class TransactionController extends Controller
         $newTransaction->point = strval($pointsEarned);
         $newTransaction->duration = '0';
         $newTransaction->save();
-    
+
         // Attach products to the transaction
         foreach ($transaction as $productId => $details) {
             $product = Product::findOrFail($productId);
 
             $subtotal = $details['price'] * $details['quantity'];
             $subtotalWithTax = $subtotal * 1.11;
-       
+
             $newTransaction->product()->attach($product->id, [
                 'quantity' => strval($details['quantity']),
                 'subtotal' => strval(round($subtotalWithTax, 2))
             ]);
         }
-    
+
         // Update or create membership
         $membership = Membership::firstOrCreate(
             ['user_id' => Auth::id()],
@@ -195,15 +215,15 @@ class TransactionController extends Controller
         );
         $membership->point += $pointsEarned - $redeemedPoints;
         $membership->save();
-    
+
         session()->forget(['transaction', 'redeemed_points', 'point_discount']);
-        
+
         return redirect()->route('transaction.index')->with('success', 'Transaction completed! You earned ' . $pointsEarned . ' points and used a discount of Rp. ' . number_format($pointDiscount, 0, ',', '.'));
     }
 
     private function calculateTotal($transaction)
     {
-        return array_sum(array_map(function($item) {
+        return array_sum(array_map(function ($item) {
             return $item['price'] * $item['quantity'];
         }, $transaction));
 

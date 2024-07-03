@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class TypeHotelSeeder extends Seeder
 {
@@ -13,13 +13,20 @@ class TypeHotelSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 0; $i < 10; $i++) {
-            DB::table('type_hotels')
-                ->insert(
-                    [
-                        'name' => "Tipe Hotel : $i",
-                    ]
-                );
-        } 
+        DB::table('type_hotels')
+        ->insert(
+            [
+                [
+                    'name' => "City Hotel"
+                ],
+                [
+                    'name' => "Residential Hotel"
+
+                ],
+                [
+                    'name' => "Motel"
+                ]
+            ]
+        );
     }
 }

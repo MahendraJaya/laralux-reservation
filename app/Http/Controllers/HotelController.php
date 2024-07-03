@@ -159,6 +159,25 @@ class HotelController extends Controller
         $hotel->rating = $request->input("rating");
         $hotel->type_hotel_id = $request->input("type_hotel_id");
         $hotel->user_id = Auth::user()->id;
+
+         // Handle image upload
+         if ($request->hasFile('file_photo')) {
+            $file = $request->file('file_photo');
+            $folder = 'hotel/image';
+
+            // Delete existing image if it exists
+            if (!empty($hotel->image) && File::exists(public_path($hotel->image))) {
+                File::delete(public_path($hotel->image));
+            }
+
+            // Move the new file to the target directory
+            $filename = time() . '_' . $file->getClientOriginalName();
+
+            $file->move(public_path($folder), $filename);
+
+            // Update the image path
+            $hotel->image = $folder . '/' . $filename;
+        }
         $hotel->save();
 
         return redirect()->route("admin.hotel.indexAdmin");

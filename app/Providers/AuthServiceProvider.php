@@ -35,6 +35,8 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('delete-hotel', 'App\Policies\HotelPolicy@delete');
         Gate::define('delete-type', 'App\Policies\TypePolicy@delete');
         Gate::define('delete-product', 'App\Policies\ProductPolicy@delete');
+        Gate::define('delete-transaction', 'App\Policies\TransactionPolicy@delete');
+
 
 
     }

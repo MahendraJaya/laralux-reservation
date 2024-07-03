@@ -12,7 +12,7 @@
             {{-- @dd($hotel) --}}
             <div class="input-group input-group-outline my-3">
                 <label class="form-label">Name</label>
-                <input type="text" id="name" name="name" value="{{ old('name', $hotel->name) }}" class="form-control">
+                <input type="text" id="name" name="name" value="{{ old('name', $hotel->name) }}" class="form-control {{ old('name', $hotel->name) ? 'floating' : '' }}">
             </div>
             <div class="input-group input-group-outline mb-3">
                 <label class="form-label">Address</label>

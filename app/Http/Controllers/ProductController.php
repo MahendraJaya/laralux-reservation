@@ -129,7 +129,7 @@ class ProductController extends Controller
         $product->type_product_id = $request->type_product_id;
         $product->hotel_id = $hotel->id;
         $product->save();
-        return redirect()->route('admin.product.indexAdmin', $hotel);
+        return redirect()->route('admin.product.index', $hotel);
     }
 
     public function editAdmin(Hotel $hotel, Product $product)
@@ -138,7 +138,7 @@ class ProductController extends Controller
         return view('admin.product.edit', compact('product', 'hotel', "types"));
     }
 
-    public function showAdmin(Product $product, Hotel $hotel)
+    public function showAdmin(Hotel $hotel,Product $product)
     {
         return view('admin.product.show', compact('product', 'hotel'));
     }
@@ -178,7 +178,22 @@ class ProductController extends Controller
         $product->save();
 
         // Redirect to the appropriate route
-        return redirect()->route('admin.product.indexAdmin', $hotel);
+        return redirect()->route('admin.product.index', $hotel);
+    }
+
+    public function destroyAdmin(Request $request){
+        $user = Auth::user();
+        $this->authorize('delete-transaction', $user);
+        try {
+            $productId = $request->id;
+            $transaction = Product::find($productId);
+            $transaction->delete();
+
+            return redirect()->route('admin.product.index')->with('status', 'Delete Product Successful');
+        } catch (\Throwable $th) {
+
+            return redirect()->route('admin.product.index')->with('status', $th);
+        }
     }
 
 

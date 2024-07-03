@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\FacilitiesController;
 use App\Http\Controllers\HotelController;
-use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TypeHotelController;
 use App\Http\Controllers\TypeProductController;
@@ -51,6 +50,7 @@ Route::get('/user/hotel/{hotel}', [HotelController::class, 'showUserHotelDetail'
 
 Route::post('/transaction/add/{product}', [TransactionController::class, 'add'])->name('transaction.add');
 Route::get('/transaction', [TransactionController::class, 'index'])->name('transaction.index');
+
 Route::post('/transaction/update', [TransactionController::class, 'update'])->name('transaction.update');
 Route::post('/transaction/checkout', [TransactionController::class, 'checkout'])->name('transaction.checkout');
 Route::post('/transaction/remove/{product}', [TransactionController::class, 'remove'])->name('transaction.remove');
@@ -82,6 +82,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
     Route::resource('hotel/{hotel}/facility', FacilitiesController::class);
     Route::resource('typeproduct', TypeProductController::class);
     Route::resource('typehotel', TypeHotelController::class);
+    Route::post('transaction/destroy',[TransactionController::class, "destroyAdmin"])->name("transaction.destroy");
+    Route::post('transaction/index',[TransactionController::class, "indexAdmin"])->name("transaction.index");
+    Route::post('transaction/{transaction}',[TransactionController::class, "showAdmin"])->name("transaction.show");
+
 
     // route untuk hotel
     // Route::get("hotel", [HotelController::class, "index"])->name("hotel.index");
@@ -94,11 +98,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
     // Route::get("hotel/{hotels}", [HotelController::class, "destroyAdmin"])->name("hotel.destroyAdmin");
 
     //route untuk product
-    Route::get("hotel/{hotel}/product", [ProductController::class, "indexAdmin"])->name("product.indexAdmin");
+    Route::get("hotel/{hotel}/product", [ProductController::class, "indexAdmin"])->name("product.index");
     Route::get("hotel/{hotel}/product/create", [ProductController::class, "createAdmin"])->name("product.createAdmin");
     Route::post("hotel/{hotel}/product", [ProductController::class, "storeAdmin"])->name("product.storeAdmin");
     Route::get("hotel/{hotel}/product/edit/{product}", [ProductController::class, "editAdmin"])->name("product.editAdmin");
     Route::get("hotel/{hotel}/product/{product}", [ProductController::class, "showAdmin"])->name("product.showAdmin");
+    Route::post("hotel/{hotel}/product/{product}", [ProductController::class, "destroyAdmin"])->name("product.destroy");
+
     Route::match(['put', 'patch'], '/admin/hotels/{hotel}/product/{product}', [ProductController::class, 'updateAdmin'])->name('product.updateAdmin');
 
     //route untuk fasilitas
@@ -108,6 +114,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
     // Route::delete("hotel/{hotel}/facility/{facility}", [FacilitiesController::class, "destroy"])->name("facility.destroyAdmin");
     // route untuk membership
     Route::resource('membership', MembershipController::class);
+
 
     
 });

@@ -16,6 +16,16 @@
 <html lang="en">
 
 <head>
+  <style>
+    .card-img-top {
+      width: 500px;
+      height: auto;
+      max-height: 500px;
+      /* Set your desired max height here */
+      object-fit: cover;
+      /* This will make sure the image is properly cropped if needed */
+    }
+  </style>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="{{asset('material-dashboard-master/assets/img/apple-icon.png')}}">
@@ -45,43 +55,48 @@
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" {{url('https://demos.creative-tim.com/material-dashboard/pages/dashboard')}} " target="_blank">
         <img src="{{asset('material-dashboard-master/assets/img/logo-ct.png')}}" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold text-white">Material Dashboard 2</span>
+        <span class="ms-1 font-weight-bold text-white">Laralux Admin Dashboard</span>
       </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link text-white " href="{{asset('material-dashboard-master/pages/dashboard.html')}}">
+          <a class="nav-link text-white " href="{{route('admin.hotel.indexAdmin')}}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
             </div>
-            <span class="nav-link-text ms-1">Dashboard</span>
+            <span class="nav-link-text ms-1">Hotels</span>
           </a>
         </li>
+
         <li class="nav-item">
-          <a class="nav-link text-white " href="{{asset('material-dashboard-master/pages/tables.html')}}">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">table_view</i>
-            </div>
-            <span class="nav-link-text ms-1">Tables</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white " href="{{asset('material-dashboard-master/pages/billing.html')}}">
+          <a class="nav-link text-white " href="{{route('admin.typehotel.index')}}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">receipt_long</i>
             </div>
-            <span class="nav-link-text ms-1">Billing</span>
+            <span class="nav-link-text ms-1">Type Hotel</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="{{asset('material-dashboard-master/pages/virtual-reality.html')}}">
+          <a class="nav-link text-white " href="{{route('admin.typeproduct.index')}}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">view_in_ar</i>
             </div>
-            <span class="nav-link-text ms-1">Virtual Reality</span>
+            <span class="nav-link-text ms-1">Type Product</span>
           </a>
+        </li>
+
+        <li class="nav-item">
+        <form id="post-form" action="{{ route('admin.transaction.index') }}" method="POST" class="nav-link-form">
+            @csrf
+            <a href="#" class="nav-link text-white" onclick="this.closest('form').submit();">
+                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <i class="material-icons opacity-10">receipt_long</i>
+                </div>
+                <span class="nav-link-text ms-1">Transaction</span>
+            </a>
+        </form>
         </li>
         <li class="nav-item">
           <a class="nav-link text-white " href="{{asset('material-dashboard-master/pages/rtl.html')}}">
@@ -255,10 +270,10 @@
       </div>
     </nav>
     <!-- End Navbar -->
-     <div class="container-fluid py-1 px-3">
+    <div class="container-fluid py-1 px-3">
       @yield("content")
-      
-     </div>
+
+    </div>
     <div class="container-fluid py-4">
       <footer class="footer py-4  ">
         <div class="container-fluid">
@@ -351,27 +366,27 @@
           <div class="form-check form-switch ps-0 ms-auto my-auto">
             <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark-version" onclick="darkMode(this)">
           </div>
-        
+
+        </div>
       </div>
     </div>
-  </div>
-  <!--   Core JS Files   -->
-  <script src="{{asset('material-dashboard-master/assets/js/core/popper.min.js')}}"></script>
-  <script src="{{asset('material-dashboard-master/assets/js/core/bootstrap.min.js')}}"></script>
-  <script src="{{asset('material-dashboard-master/assets/js/plugins/perfect-scrollbar.min.js')}}"></script>
-  <script src="{{asset('material-dashboard-master/assets/js/plugins/smooth-scrollbar.min.js')}}"></script>
-  <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
+    <!--   Core JS Files   -->
+    <script src="{{asset('material-dashboard-master/assets/js/core/popper.min.js')}}"></script>
+    <script src="{{asset('material-dashboard-master/assets/js/core/bootstrap.min.js')}}"></script>
+    <script src="{{asset('material-dashboard-master/assets/js/plugins/perfect-scrollbar.min.js')}}"></script>
+    <script src="{{asset('material-dashboard-master/assets/js/plugins/smooth-scrollbar.min.js')}}"></script>
+    <script>
+      var win = navigator.platform.indexOf('Win') > -1;
+      if (win && document.querySelector('#sidenav-scrollbar')) {
+        var options = {
+          damping: '0.5'
+        }
+        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
       }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-    }
-  </script>
-  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="{{asset('material-dashboard-master/assets/js/material-dashboard.min.js?v=3.1.0')}}"></script>
-  @yield('javascript')
+    </script>
+    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="{{asset('material-dashboard-master/assets/js/material-dashboard.min.js?v=3.1.0')}}"></script>
+    @yield('javascript')
 </body>
 
 </html>

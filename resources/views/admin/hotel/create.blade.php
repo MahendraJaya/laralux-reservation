@@ -34,6 +34,10 @@
                 <input type="number" id="rating" name="rating" class="form-control">
             </div>
             <div class="input-group input-group-outline mb-3">
+                <label for="file_photo" class="form-label">input image</label>
+                <input class="form-control" type="file" id="file_photo" name="file_photo">
+            </div>
+            <div class="input-group input-group-outline mb-3">
 
                 <select class="form-select p-2" aria-label="Default select example" name="type_hotel_id" id="type_hotel_id">
                     @foreach ($types as $type)

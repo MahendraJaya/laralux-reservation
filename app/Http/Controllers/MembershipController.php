@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Membership;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MembershipController extends Controller
 {
@@ -13,8 +14,8 @@ class MembershipController extends Controller
      */
     public function index()
     {
-        $memberships = Membership::with("user")->get();
-        return view("admin.membership.index", compact("memberships"));
+        $membership = Membership::where('user_id', Auth::id())->first();
+        return view('membership.index', compact('membership'));
     }
 
     /**

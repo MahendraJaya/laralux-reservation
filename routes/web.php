@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FacilitiesController;
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TypeHotelController;
 use App\Http\Controllers\TypeProductController;
@@ -34,7 +35,9 @@ Route::get('/home', function () {
 
 //halaman index
 // Route::get('/', [HotelController::class, "index"]);
-
+Route::get('/', function(){
+return redirect()->route('hotel.indexUser');
+});
 Route::resource('hotels', HotelController::class);
 
 Auth::routes();
@@ -84,7 +87,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
     Route::resource('typehotel', TypeHotelController::class);
     Route::post('transaction/destroy',[TransactionController::class, "destroyAdmin"])->name("transaction.destroy");
     Route::post('transaction/index',[TransactionController::class, "indexAdmin"])->name("transaction.index");
-    Route::post('transaction/{transaction}',[TransactionController::class, "showAdmin"])->name("transaction.show");
+    Route::get('transaction/{transactions}',[TransactionController::class, "showAdmin"])->name("transaction.show");
 
     // route untuk hotel
     // Route::get("hotel", [HotelController::class, "index"])->name("hotel.index");
@@ -98,8 +101,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
 
     //route untuk product
 
-    // Route::get("hotel/{hotel}/product", [ProductController::class, "indexAdmin"])->name("admin.product.indexAdmin");
-    Route::get("admin/product", [ProductController::class, "indexAdmin"])->name("product.indexAdmin");
+    Route::get("hotel/{hotel}/product", [ProductController::class, "indexAdmin"])->name("product.indexAdmin");
+    // Route::get("admin/product", [ProductController::class, "indexAdmin"])->name("product.indexAdmin");
 
     Route::get("hotel/{hotel}/product/create", [ProductController::class, "createAdmin"])->name("product.createAdmin");
     Route::post("hotel/{hotel}/product", [ProductController::class, "storeAdmin"])->name("product.storeAdmin");

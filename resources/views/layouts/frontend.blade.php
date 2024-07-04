@@ -21,6 +21,18 @@
 
         <!-- Template Stylesheet -->
         <link href="{{ asset('frontend/css/style.css') }}" rel="stylesheet">
+
+        <style>
+            .pagination .page-item.active .page-link {
+                background-color: #007bff;
+                border-color: #007bff;
+            }
+            .pagination .page-link {
+                padding: 0.5rem 0.75rem;
+                font-size: 1rem;
+                color: black;
+            }
+        </style>
     </head>
 
     <body>

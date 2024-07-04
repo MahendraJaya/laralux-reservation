@@ -26,6 +26,11 @@
                         </div>
                     @endforeach
                 </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                      {{ $hotels->links('pagination::bootstrap-4') }}
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

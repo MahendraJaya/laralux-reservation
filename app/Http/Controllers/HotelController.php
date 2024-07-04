@@ -114,6 +114,8 @@ class HotelController extends Controller
     public function indexAdmin()
     {
         
+        $user = Auth::user();
+        $this->authorize('create-hotel', $user);
 
 
         if (Auth::user()->role == "owner") {

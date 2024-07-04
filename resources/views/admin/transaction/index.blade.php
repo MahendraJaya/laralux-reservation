@@ -25,9 +25,9 @@
                         <td>{{ $transaction->user->name }}</td>
                         <td>{{ $transaction->check_in }}</td>
                         
-                        <td><a href="{{ route('admin.hotel.showAdmin', $transaction->hotel_id) }}" class="btn btn-primary">Detail</a> || <a
+                        <td> <a
                                 href="{{ route('admin.transaction.show', ['transactions' => $transaction]) }}"
-                                class="btn btn-secondary">Detail</a></td>
+                                class="btn btn-primary">Detail</a></td>
                         
                     </tr>
                 @endforeach

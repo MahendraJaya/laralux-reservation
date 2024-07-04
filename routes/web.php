@@ -86,7 +86,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
     Route::post('transaction/index',[TransactionController::class, "indexAdmin"])->name("transaction.index");
     Route::post('transaction/{transaction}',[TransactionController::class, "showAdmin"])->name("transaction.show");
 
-
     // route untuk hotel
     // Route::get("hotel", [HotelController::class, "index"])->name("hotel.index");
     Route::get("hotel/create", [HotelController::class, "createAdmin"])->name("hotel.createAdmin");

@@ -57,7 +57,7 @@
                             <a href="{{ route('product.indexUser') }}" class="nav-item nav-link">Product Detail</a>
                             <a href="{{ route('transaction.index') }}" class="nav-item nav-link">Cart</a>
                             <a href="{{ route('membership.index') }}" class="nav-item nav-link">Membership</a>
-                            <a href="my-account.html" class="nav-item nav-link">My Account</a>
+                            <a href="{{ route('transaction.indexUser') }}" class="nav-item nav-link">My Reservation</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle active" data-toggle="dropdown">More Pages</a>
                                 <div class="dropdown-menu">

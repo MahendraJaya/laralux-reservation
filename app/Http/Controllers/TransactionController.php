@@ -44,18 +44,24 @@ class TransactionController extends Controller
     public function indexUser()
     {
         $userId = Auth::user()->id;
-        $transactions = Transaction::with('product')->where('user_id', $userId)->get();
+        $transactions = Transaction::where('user_id', $userId)->get();
+        
+
+        return view('user.transaction.indexAll', compact('transactions'));
+    }
+
+    public function showUser(Transaction $transaction){
         $total = 0;
-        foreach ($transactions as $transaction) {
+        
             foreach ($transaction->product as $product) {
                 $total += $product->pivot->subtotal;
             }
-        }
+        
         $totalWithTax = $total * 1.11;
         $pointDiscount = session()->get('point_discount', 0);
         $finalTotal = $totalWithTax - $pointDiscount;
 
-        return view('user.transaction.indexAll', compact('transactions', 'total', 'totalWithTax', 'pointDiscount', 'finalTotal'));
+        return view('user.transaction.show', compact('transaction', 'total', 'totalWithTax', 'pointDiscount', 'finalTotal'));
     }
 
 

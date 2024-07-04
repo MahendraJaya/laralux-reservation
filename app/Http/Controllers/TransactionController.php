@@ -17,10 +17,12 @@ class TransactionController extends Controller
         $role = Auth::user()->role;
         if ($role == 'owner') {
             $ownerId = Auth::id();
-            $transactions = Transaction::where('owner', $ownerId)->get();
+            // $transactions = [];
+            $transactions = Transaction::where('owner', $ownerId)->with(['user', 'product'])->get();
             return view('admin.transaction.index', compact('transactions'));
 
         } else if ($role == 'staff') {
+            // $transactions = [];
             $transactions = Transaction::all();
             return view('admin.transaction.index', compact('transactions'));
         }
@@ -244,34 +246,48 @@ class TransactionController extends Controller
 
     // }
 
-    public function indexAdmin(Request $request){
+    public function indexAdmin(Request $request)
+    {
         $role = Auth::user()->role;
-        if($role == 'owner'){
+        if ($role == 'owner') {
             $userId = Auth::id();
             $ownerId = Auth::id();
-            $transactions = Transaction::select('transactions.*')
-            ->join('product_transaction', 'transactions.id', '=', 'product_transaction.transaction_id')
-            ->join('products', 'product_transaction.product_id', '=', 'products.id')
-            ->join('hotels', 'products.hotel_id', '=', 'hotels.id')
-            ->where('hotels.user_id', $userId)
-            ->get();            
+            $transactions = Transaction::select(
+                'transactions.*',
+                'hotels.id as hotel_id'
+            )
+                ->join('product_transaction', 'transactions.id', '=', 'product_transaction.transaction_id')
+                ->join('products', 'product_transaction.product_id', '=', 'products.id')
+                ->join('hotels', 'products.hotel_id', '=', 'hotels.id')
+                ->where('hotels.user_id', $userId)
+                ->get();
             return view('admin.transaction.index', compact('transactions'));
 
-        }
-
-        else if($role == 'staff'){ 
+        } else if ($role == 'staff') {
             $transactions = Transaction::all();
             return view('admin.transaction.index', compact('transactions'));
         }
     }
 
-    public function showAdmin(Transaction $transactions){
+    public function showAdmin(Transaction $transactions)
+    {
         $role = Auth::user()->role;
-        return view('admin.transaction.show', compact('transactions'));
-        
+        $transactions_ = Transaction::where('id', $transactions->id)->with(['user', 'product'])->get();
+        $total = 0;
+        foreach ($transactions_ as $transaction) {
+            foreach ($transaction->product as $product) {
+                $total += $product->pivot->subtotal;
+            }
+        }
+        $totalWithTax = $total * 1.11;
+        $pointDiscount = session()->get('point_discount', 0);
+        $finalTotal = $totalWithTax - $pointDiscount;
+        return view('admin.transaction.show', compact('transactions_', 'total', 'totalWithTax', 'pointDiscount', 'finalTotal'));
+
     }
 
-    public function destroyAdmin(Request $request){
+    public function destroyAdmin(Request $request)
+    {
         $user = Auth::user();
         $this->authorize('delete-transaction', $user);
         try {
@@ -284,7 +300,7 @@ class TransactionController extends Controller
 
             return redirect()->route('admin.transaction.index')->with('status', $th);
         }
-        
+
     }
 
 }

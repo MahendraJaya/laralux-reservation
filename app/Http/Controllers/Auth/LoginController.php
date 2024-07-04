@@ -56,7 +56,7 @@ class LoginController extends Controller
         if ($user->role === 'owner' || $user->role === 'staff') {
             return redirect('/admin');
         } elseif ($user->role === 'pembeli') {
-            return redirect('/home');
+            return redirect()->route('hotel.indexUser');
         }
     }
 }

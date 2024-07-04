@@ -36,7 +36,7 @@
             </div>
             <hr class="dark horizontal my-0">
             <div class="card-footer p-3">
-            <a href="{{ route('admin.product.index', $hotel) }}" class="btn btn-primary">Product</a>
+            <a href="{{ route('admin.product.indexAdmin', $hotel) }}" class="btn btn-primary">Product</a>
             </div>
           </div>
         </div>

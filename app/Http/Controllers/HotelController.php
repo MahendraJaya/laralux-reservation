@@ -115,8 +115,6 @@ class HotelController extends Controller
     {
         
         $user = Auth::user();
-        $this->authorize('create-hotel', $user);
-
 
         if (Auth::user()->role == "owner") {
             $hotels = Hotel::where("user_id", $user->id)->with(["user", "typeHotel"])->get();
